@@ -1,0 +1,118 @@
+graph TD
+    %% Plugin Development Process in NvChad
+    A[Plugin Idea] --> B[Plugin Structure Planning]
+    
+    B --> C[Create Plugin Directory]
+    C --> D[lua/custom/my-plugin/]
+    
+    D --> E[Create init.lua]
+    E --> F[Define Module Table]
+    F --> G[Implement setup() function]
+    G --> H[Add Core Functionality]
+    
+    subgraph "Plugin Components"
+        I[Configuration Handling]
+        J[Keybinding Registration]
+        K[Autocommand Setup]
+        L[User Commands]
+        M[Highlight Groups]
+        N[Custom Functions]
+    end
+    
+    H --> I
+    H --> J
+    H --> K
+    H --> L
+    H --> M
+    H --> N
+    
+    subgraph "Integration Methods"
+        O[Add to custom/plugins.lua]
+        P[Register in chadrc.lua]
+        Q[Add to custom/mappings.lua]
+        R[Include in custom/configs/]
+    end
+    
+    I --> O
+    J --> Q
+    K --> P
+    L --> R
+    
+    subgraph "Testing & Debugging"
+        S[Local Testing]
+        T[Error Handling]
+        U[Performance Check]
+        V[Documentation]
+    end
+    
+    O --> S
+    P --> S
+    Q --> S
+    R --> S
+    
+    S --> T
+    T --> U
+    U --> V
+    
+    subgraph "Advanced Features"
+        W[Custom Completion Source]
+        X[Telescope Extension]
+        Y[Statusline Component]
+        Z[Dashboard Widget]
+    end
+    
+    V --> W
+    V --> X
+    V --> Y
+    V --> Z
+    
+    subgraph "Distribution"
+        AA[GitHub Repository]
+        BB[Plugin Manager Support]
+        CC[Documentation Site]
+        DD[Community Sharing]
+    end
+    
+    W --> AA
+    X --> BB
+    Y --> CC
+    Z --> DD
+    
+    %% Code Examples
+    EE["`Example Structure:
+    lua/custom/my-plugin/
+    ├── init.lua
+    ├── config.lua
+    ├── utils.lua
+    └── commands.lua`"]
+    
+    FF["`Basic Module:
+    local M = {}
+    
+    M.setup = function(opts)
+      -- Plugin initialization
+    end
+    
+    M.my_function = function()
+      -- Custom functionality
+    end
+    
+    return M`"]
+    
+    C -.-> EE
+    F -.-> FF
+    
+    %% Styling
+    classDef processClass fill:#e3f2fd
+    classDef componentClass fill:#f1f8e9
+    classDef integrationClass fill:#fff8e1
+    classDef testingClass fill:#fce4ec
+    classDef advancedClass fill:#f3e5f5
+    classDef distributionClass fill:#e0f2f1
+    
+    class A,B,C,D,E,F,G,H processClass
+    class I,J,K,L,M,N componentClass
+    class O,P,Q,R integrationClass
+    class S,T,U,V testingClass
+    class W,X,Y,Z advancedClass
+    class AA,BB,CC,DD distributionClass

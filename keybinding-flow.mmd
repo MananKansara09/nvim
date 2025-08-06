@@ -1,0 +1,86 @@
+flowchart TD
+    %% Keybinding Flow and Hierarchy
+    A[Key Press] --> B{Mode Detection}
+    
+    B -->|Normal Mode| C[Normal Mode Mappings]
+    B -->|Insert Mode| D[Insert Mode Mappings] 
+    B -->|Visual Mode| E[Visual Mode Mappings]
+    B -->|Command Mode| F[Command Mode Mappings]
+    
+    subgraph "Leader Key System"
+        G[<leader> Key] --> H{Which-key Activation}
+        H --> I[Show Available Keys]
+        H --> J[Wait for Next Key]
+        
+        J --> K[File Operations]
+        J --> L[Git Operations]
+        J --> M[LSP Operations]
+        J --> N[Buffer Operations]
+        J --> O[Window Operations]
+        J --> P[Custom Operations]
+        
+        K --> K1[<leader>ff - Find Files]
+        K --> K2[<leader>fr - Recent Files]
+        K --> K3[<leader>fs - Save File]
+        
+        L --> L1[<leader>gs - Git Status]
+        L --> L2[<leader>gc - Git Commit]
+        L --> L3[<leader>gp - Git Push]
+        
+        M --> M1[<leader>ca - Code Actions]
+        M --> M2[<leader>cf - Format Code]
+        M --> M3[<leader>cr - Rename Symbol]
+        
+        N --> N1[<leader>bd - Delete Buffer]
+        N --> N2[<leader>bn - Next Buffer]
+        N --> N3[<leader>bp - Previous Buffer]
+        
+        O --> O1[<leader>wh - Split Horizontal]
+        O --> O2[<leader>wv - Split Vertical]
+        O --> O3[<leader>wq - Quit Window]
+    end
+    
+    subgraph "Special Keys"
+        Q[Telescope Mappings]
+        R[LSP Mappings]
+        S[NvimTree Mappings]
+        T[Custom Plugin Mappings]
+        
+        Q --> Q1[Ctrl-p - Find Files]
+        Q --> Q2[Ctrl-f - Live Grep]
+        
+        R --> R1[gd - Go to Definition]
+        R --> R2[K - Hover Documentation]
+        R --> R3[<space>e - Show Diagnostics]
+        
+        S --> S1[Ctrl-n - Toggle Tree]
+        S --> S2[Tab - Open File]
+        
+        T --> T1[Custom Function 1]
+        T --> T2[Custom Function 2]
+    end
+    
+    subgraph "Mapping Sources"
+        U[Core NvChad] --> V[Default Mappings]
+        W[Custom Mappings] --> X[User Overrides]
+        Y[Plugin Mappings] --> Z[Plugin Specific]
+    end
+    
+    C --> G
+    C --> Q
+    C --> R
+    C --> S
+    C --> T
+    
+    V --> C
+    X --> C
+    Z --> C
+    
+    %% Styling
+    classDef leaderClass fill:#e8f4fd
+    classDef specialClass fill:#fff3e0
+    classDef sourceClass fill:#f1f8e9
+    
+    class G,H,I,J,K,L,M,N,O,P,K1,K2,K3,L1,L2,L3,M1,M2,M3,N1,N2,N3,O1,O2,O3 leaderClass
+    class Q,R,S,T,Q1,Q2,R1,R2,R3,S1,S2,T1,T2 specialClass
+    class U,V,W,X,Y,Z sourceClass

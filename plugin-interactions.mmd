@@ -1,0 +1,72 @@
+graph LR
+    %% Plugin Interaction Flow
+    subgraph "Core Plugins"
+        A[lazy.nvim] --> B[Plugin Loading]
+        B --> C[Plugin Configuration]
+        
+        D[Telescope] --> E[File Finder]
+        D --> F[Live Grep]
+        D --> G[Buffers]
+        D --> H[Help Tags]
+        
+        I[Treesitter] --> J[Syntax Highlighting]
+        I --> K[Code Folding]
+        I --> L[Text Objects]
+        
+        M[LSP] --> N[Language Servers]
+        N --> O[Diagnostics]
+        N --> P[Completion]
+        N --> Q[Go-to Definition]
+        N --> R[Hover Info]
+        
+        S[null-ls] --> T[Formatters]
+        S --> U[Linters]
+        S --> V[Code Actions]
+    end
+    
+    subgraph "UI & Navigation"
+        W[Which-key] --> X[Key Hints]
+        W --> Y[Leader Menus]
+        
+        Z[Lualine] --> AA[Status Info]
+        Z --> BB[Git Status]
+        Z --> CC[LSP Status]
+        Z --> DD[File Info]
+        
+        EE[NvimTree] --> FF[File Explorer]
+        EE --> GG[Directory Navigation]
+    end
+    
+    subgraph "Integration Layer"
+        HH[Custom Configs] --> D
+        HH --> I
+        HH --> M
+        HH --> S
+        
+        II[Custom Mappings] --> D
+        II --> EE
+        II --> W
+        
+        JJ[Autocommands] --> KK[File Type Detection]
+        JJ --> LL[Auto Save]
+        JJ --> MM[Custom Events]
+    end
+    
+    %% Interactions
+    D -.-> I
+    M -.-> P
+    S -.-> M
+    W -.-> D
+    W -.-> M
+    Z -.-> M
+    HH -.-> A
+    II -.-> W
+    
+    %% Styling
+    classDef corePlugin fill:#ffecb3
+    classDef uiPlugin fill:#c8e6c9
+    classDef integration fill:#f8bbd9
+    
+    class A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V corePlugin
+    class W,X,Y,Z,AA,BB,CC,DD,EE,FF,GG uiPlugin
+    class HH,II,JJ,KK,LL,MM integration

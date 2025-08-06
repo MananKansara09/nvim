@@ -1,0 +1,74 @@
+stateDiagram-v2
+    [*] --> BufferOpen: Open file
+    
+    state "LSP Initialization" as LSPInit {
+        BufferOpen --> FileTypeDetection
+        FileTypeDetection --> ServerLookup: Detect filetype
+        ServerLookup --> ServerStart: LSP server available
+        ServerLookup --> NoLSP: No server configured
+        
+        ServerStart --> Capabilities: Server started
+        Capabilities --> AttachBuffer: Exchange capabilities
+        AttachBuffer --> Ready: Buffer attached
+        
+        NoLSP --> [*]: Basic editing only
+    }
+    
+    state "LSP Active" as LSPActive {
+        Ready --> Diagnostics: Continuous
+        Ready --> Completion: On trigger
+        Ready --> Hover: On K key
+        Ready --> GotoDefinition: On gd
+        Ready --> FindReferences: On gr
+        Ready --> CodeAction: On <space>ca
+        Ready --> Rename: On <space>cr
+        Ready --> Format: On <space>cf
+        
+        Diagnostics --> ShowErrors: Display in UI
+        Diagnostics --> ShowWarnings: Display in UI
+        Diagnostics --> ShowHints: Display in UI
+        
+        ShowErrors --> QuickFix: Navigate with ]d [d
+        ShowWarnings --> QuickFix
+        ShowHints --> QuickFix
+        
+        Completion --> CompletionMenu: Show suggestions
+        CompletionMenu --> Insert: Select item
+        CompletionMenu --> Dismiss: Escape/move
+        
+        Hover --> ShowDocs: Floating window
+        ShowDocs --> Dismiss
+        
+        GotoDefinition --> JumpToLocation: Navigate to symbol
+        FindReferences --> TelescopeList: Show all references
+        CodeAction --> ActionMenu: Show available actions
+        Rename --> RenamePrompt: Enter new name
+        Format --> FormatCode: Apply formatting
+        
+        JumpToLocation --> Ready
+        TelescopeList --> Ready
+        ActionMenu --> Ready
+        RenamePrompt --> Ready
+        FormatCode --> Ready
+        Insert --> Ready
+        Dismiss --> Ready
+        QuickFix --> Ready
+    }
+    
+    Ready --> BufferClose: Close file
+    BufferClose --> DetachBuffer: Clean up
+    DetachBuffer --> [*]: LSP detached
+    
+    note right of LSPInit
+        Configured in:
+        - lspconfig.lua
+        - custom/configs/
+        - Plugin specifications
+    end note
+    
+    note right of LSPActive
+        Features depend on:
+        - Server capabilities
+        - Client configuration  
+        - Custom mappings
+    end note

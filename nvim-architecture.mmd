@@ -1,0 +1,54 @@
+graph TB
+    %% NvChad/Neovim Overall Architecture
+    subgraph "Neovim Core"
+        A[init.lua] --> B[Core Configuration]
+        B --> C[Vim API Layer]
+        C --> D[Buffer Management]
+        C --> E[Window Management]
+        C --> F[Autocommands]
+        C --> G[Key Mappings]
+    end
+    
+    subgraph "NvChad Structure"
+        H[~/.config/nvim/] --> A
+        H --> I[lua/core/]
+        H --> J[lua/plugins/]
+        H --> K[lua/custom/]
+        
+        I --> L[Options & Settings]
+        I --> M[Default Mappings]
+        I --> N[Autocmds]
+        
+        J --> O[Plugin Specs]
+        J --> P[Plugin Configs]
+        
+        K --> Q[chadrc.lua]
+        K --> R[plugins.lua]
+        K --> S[mappings.lua]
+        K --> T[Custom Configs]
+    end
+    
+    subgraph "Plugin Ecosystem"
+        U[lazy.nvim] --> V[Plugin Manager]
+        V --> W[Telescope]
+        V --> X[Treesitter]
+        V --> Y[LSP Config]
+        V --> Z[Null-ls]
+        V --> AA[Which-key]
+        V --> BB[Lualine]
+        V --> CC[Custom Plugins]
+    end
+    
+    Q --> U
+    R --> U
+    S --> G
+    T --> P
+    
+    %% Styling
+    classDef coreClass fill:#e1f5fe
+    classDef nvChadClass fill:#f3e5f5
+    classDef pluginClass fill:#e8f5e8
+    
+    class A,B,C,D,E,F,G coreClass
+    class H,I,J,K,L,M,N,O,P,Q,R,S,T nvChadClass
+    class U,V,W,X,Y,Z,AA,BB,CC pluginClass

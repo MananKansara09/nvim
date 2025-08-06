@@ -1,0 +1,40 @@
+sequenceDiagram
+    participant User
+    participant Neovim
+    participant InitLua as init.lua
+    participant NvChad as NvChad Core
+    participant Custom as Custom Config
+    participant Lazy as lazy.nvim
+    participant Plugins as Plugins
+    
+    User->>Neovim: Start Neovim
+    Neovim->>InitLua: Execute init.lua
+    InitLua->>NvChad: Load NvChad bootstrap
+    NvChad->>NvChad: Set default options
+    NvChad->>NvChad: Load core mappings
+    NvChad->>Custom: Check for custom/chadrc.lua
+    
+    alt Custom config exists
+        Custom->>Custom: Load custom UI settings
+        Custom->>Custom: Load custom mappings
+        Custom->>Custom: Get plugin list
+        Custom->>Lazy: Pass custom plugins
+    else No custom config
+        NvChad->>Lazy: Use default plugins
+    end
+    
+    Lazy->>Plugins: Install/Update plugins
+    Plugins->>Plugins: Load plugin configurations
+    Plugins->>NvChad: Register plugin keymaps
+    Plugins->>NvChad: Register plugin commands
+    
+    loop For each plugin
+        Plugins->>Plugins: Execute plugin setup()
+        Plugins->>Neovim: Register autocommands
+        Plugins->>Neovim: Create user commands
+    end
+    
+    NvChad->>Neovim: Apply final configurations
+    Neovim->>User: Ready for use
+    
+    Note over User,Plugins: Configuration Priority:<br/>1. Custom configs override defaults<br/>2. Plugin configs can be overridden<br/>3. Last loaded takes precedence
