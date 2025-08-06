@@ -7,7 +7,7 @@ graph TD
     
     D --> E[Create init.lua]
     E --> F[Define Module Table]
-    F --> G[Implement setup() function]
+    F --> G[Implement setup function]
     G --> H[Add Core Functionality]
     
     subgraph "Plugin Components"
@@ -116,3 +116,24 @@ graph TD
     class S,T,U,V testingClass
     class W,X,Y,Z advancedClass
     class AA,BB,CC,DD distributionClass
+
+    %% Learning Resources - YouTube Videos
+    subgraph "YouTube Learning Resources"
+        YT1["`🎥 TJ DeVries - Neovim Plugin Development
+        https://youtube.com/watch?v=n4Lp4cV8YR0`"]
+        YT2["`🎥 ThePrimeagen - Neovim Lua Configuration
+        https://youtube.com/watch?v=w7i4amO_zaE`"]
+        YT3["`🎥 chris@machine - Complete Neovim Setup
+        https://youtube.com/playlist?list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ`"]
+        YT4["`🎥 Josean Martinez - Neovim Setup From Scratch
+        https://youtube.com/watch?v=vdn_pKJUda8`"]
+        YT5["`🎥 Elijah Manor - Neovim Plugin Development
+        https://youtube.com/watch?v=HXxjNWE9eT4`"]
+    end
+
+    %% Connect learning resources to relevant sections
+    V -.-> YT1
+    W -.-> YT2
+    X -.-> YT3
+    AA -.-> YT4
+    BB -.-> YT5
